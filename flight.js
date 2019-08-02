@@ -45,8 +45,182 @@ const vols = [{
   numVol: 'xxxxx',
   prix: '850',
   dureeTrajet: '14'
+},
+{
+  destination: 'Paris',
+  date_depart: '03/13/2019',
+  compagnie_aerienne: 'Lufthansa',
+  numVol: 'xxxxx',
+  prix: '666',
+  dureeTrajet: '14'
 }
 ];
+
+///////////////////////////////////////
+//Exercice 1 - Afficher tous les vols//
+///////////////////////////////////////
+
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  document.getElementById('all_flights').insertAdjacentHTML('beforeEnd', contenu);
+});
+
+///////////////////////////////////////////
+//Exercice 2 - Durée du trajet < 7 heures//
+///////////////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  let dureeTrajet = parseInt(vol.dureeTrajet);
+
+  if(dureeTrajet < 7) {
+     document.getElementById('under7hours').insertAdjacentHTML('beforeEnd', contenu);
+  }
+
+});
+
+////////////////////////////////////
+//Exercice 3 - Air France et Tokyo//
+////////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  if(vol.destination === 'Tokyo' && vol.compagnie_aerienne === 'Air france') {
+     document.getElementById('AFTokyo').insertAdjacentHTML('beforeEnd', contenu);
+  }
+
+});
+
+//////////////////////////////////////////
+//Exercice 4 - Tarif < 700€ + Air France//
+//////////////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  let tarif = parseInt(vol.prix);
+
+  if(vol.compagnie_aerienne === 'Air france' && tarif < 700) {
+     document.getElementById('AF700').insertAdjacentHTML('beforeEnd', contenu);
+  }
+
+});
+
+///////////////////////////////////////
+//Exercice 5 - A partir d'aujourd'hui//
+///////////////////////////////////////
+
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  let date_depart = vol.date_depart.split('/');
+
+  let mois_depart = parseInt(date_depart[0]);
+  let jour_depart = parseInt(date_depart[1]);
+  let annee_depart = parseInt(date_depart[2]);
+
+  
+  const now = new Date(); 
+
+  const annee = now.getFullYear();
+  const mois = now.getMonth()+1;
+  
+  const jour = ('0'+now.getDate()   ).slice(-2);
+
+  if(annee_depart > annee || (annee_depart === annee && mois_depart > mois) || (annee_depart === annee && mois_depart === mois && jour_depart >= jour)) {
+    document.getElementById('date_apres_ajd').insertAdjacentHTML('beforeEnd', contenu);
+  }
+
+
+});
+
+//////////////////////////////////
+//Exercice 6 - Avant aujourd'hui//
+//////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  let date_depart = vol.date_depart.split('/');
+
+  let mois_depart = parseInt(date_depart[0]);
+  let jour_depart = parseInt(date_depart[1]);
+  let annee_depart = parseInt(date_depart[2]);
+
+  
+  const now = new Date(); 
+
+  const annee = now.getFullYear();
+  const mois = now.getMonth()+1;
+  
+  const jour = ('0'+now.getDate()   ).slice(-2);
+
+  if(annee_depart < annee || (annee_depart === annee && mois_depart < mois) || (annee_depart === annee && mois_depart === mois && jour_depart <= jour)) {
+    document.getElementById('date_avant_ajd').insertAdjacentHTML('beforeEnd', contenu);
+  }
+
+
+});
+
+/////////////////////////////////
+//Exercice 7 - Réduction de 20%//
+/////////////////////////////////
+
+vols.forEach((vol) => {
+
+  reduction = vol.prix - (vol.prix * 0.2);
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ reduction +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  document.getElementById('reduction').insertAdjacentHTML('beforeEnd', contenu);
+
+});
+
+////////////////////////////////////////////////////
+//Exercice 8 - Paris entre 06/02/2019 & 09/06/2019//
+////////////////////////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+  let date_depart = vol.date_depart.split('/');
+
+  let mois_depart = parseInt(date_depart[0]);
+  let jour_depart = parseInt(date_depart[1]);
+  let annee_depart = parseInt(date_depart[2]);
+
+ if(vol.destination === 'Paris' && ((annee_depart > 2019 || (annee_depart === 2019 && mois_depart > 2) || (annee_depart === 2019 && mois_depart === 2 && jour_depart >= 6)) && (annee_depart < 2019 || (annee_depart === 2019 && mois_depart < 6) || (annee_depart === 2019 && mois_depart === 6 && jour_depart <= 9)))) {
+    document.getElementById('intervalle').insertAdjacentHTML('beforeEnd', contenu);
+ }
+
+});
+
+///////////////////////////////////////////////////////////
+//Exercice 9 - Lufthansa, prix < 900 et durée < 15 heures//
+///////////////////////////////////////////////////////////
+
+vols.forEach((vol) => {
+
+  let contenu = '<div class="container"><ul><li>Destination : ' + vol.destination +'</li><li>Date de départ : ' + vol.date_depart +'</li><li>Compagnie aérienne : ' + vol.compagnie_aerienne +'</li><li>Numéro de vol : '+ vol.numVol +'</li><li>Prix : '+ vol.prix +'€</li><li>Durée du trajet : ' + vol.dureeTrajet +' heures</li></ul></div>';
+
+
+ if(vol.compagnie_aerienne === 'Lufthansa' && vol.prix < 900 && vol.dureeTrajet < 15) {
+    document.getElementById('luft').insertAdjacentHTML('beforeEnd', contenu);
+ }
+
+});
 
 
 //Affichez tous les vols (destination - Date de départ- compagnie aérienne -

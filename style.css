@@ -1,0 +1,9 @@
+section {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.container {
+	background-color: lightblue;
+	margin: 10px;
+}
